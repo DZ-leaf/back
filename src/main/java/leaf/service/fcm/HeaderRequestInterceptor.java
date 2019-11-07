@@ -20,8 +20,6 @@ public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
         HttpRequest wrapper = new HttpRequestWrapper(req);
         wrapper.getHeaders().set(headerName, headerValue);
         return execution.execute(wrapper, body);
-
-
     }
 
 }

@@ -34,14 +34,12 @@ public class MemberController {
     private AlarmRepository repo;
     private S3FileIO s3uploader;
 
-    Map<String, Object> map = new HashMap<>();
-
     // 진짜 코드 (수정 금지)
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Map<String, Object> register(@RequestBody Member model) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/register");
-        map.clear();
         System.out.println(model);
         map.put("message", memberService.register(model) ? "success" : "fail");
         return map;
@@ -49,9 +47,9 @@ public class MemberController {
 
     @RequestMapping(value = "/idCheck", method = RequestMethod.POST)
     public Map<String, Object> idCheck(@RequestBody Object obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/idCheck");
         System.out.println("도커된당");
-        map.clear();
         map.put("message", memberService.idCheck(obj.toString()));
 
         return map;
@@ -59,8 +57,8 @@ public class MemberController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map<String, Object> login() {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/login");
-        map.clear();
         return map;
     }
 
@@ -72,8 +70,8 @@ public class MemberController {
 
     @RequestMapping(value = "/findCompany", method = RequestMethod.POST)
     public Map<String, Object> findCompany(@RequestBody Object obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/findCompany");
-        map.clear();
         try {
             map.put("data", companyService.findCompany(obj.toString()));
             map.put("message", "success");
@@ -85,8 +83,8 @@ public class MemberController {
 
     @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
     public Map<String, Object> sendEmail(@RequestBody Object obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/sendEmail");
-        map.clear();
         String email = obj.toString();
         try {
             String authNum = this.sendEmail(email);
@@ -103,8 +101,8 @@ public class MemberController {
 
     @RequestMapping(value = "/findIdAuthNm", method = RequestMethod.POST)
     public Map<String, Object> findIdAuthNm(@RequestBody String obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/findIdAuthNm");
-        map.clear();
         JSONObject json = new JSONObject(obj);
         String name = json.getString("memberNm");
         String email = json.getString("email");
@@ -120,8 +118,8 @@ public class MemberController {
 
     @RequestMapping(value = "/findId", method = RequestMethod.POST)
     public Map<String, Object> findId(@RequestBody String obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/findId");
-        map.clear();
         JSONObject json = new JSONObject(obj);
         String name = json.getString("memberNm");
         String email = json.getString("email");
@@ -132,8 +130,8 @@ public class MemberController {
 
     @RequestMapping(value = "/findPwAuthNm", method = RequestMethod.POST)
     public Map<String, Object> findPwAuthNm(@RequestBody String obj) {
+        Map<String, Object> map = new HashMap<>();
         System.out.println("/member/findPwAuthNm");
-        map.clear();
         JSONObject json = new JSONObject(obj);
         String id = json.getString("memberId");
         String email = json.getString("email");
@@ -148,12 +146,12 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/changePw", method = RequestMethod.POST)
-    public Map<String, Object> changePw(@RequestBody String obj) {
-        System.out.println("/member/changePw");
-        map.clear();
-        JSONObject json = new JSONObject(obj);
-        String id = json.getString("memberId");
-        String pw = json.getString("memberPw");
+        public Map<String, Object> changePw(@RequestBody String obj) {
+            Map<String, Object> map = new HashMap<>();
+            System.out.println("/member/changePw");
+            JSONObject json = new JSONObject(obj);
+            String id = json.getString("memberId");
+            String pw = json.getString("memberPw");
         if (memberService.changePw(id, pw)) {
             map.put("message", "success");
         } else {
@@ -164,7 +162,7 @@ public class MemberController {
 
     @GetMapping("/logintest")
     public Map<String, Object> loginTest(HttpServletResponse res, String id, String pw) {
-        map.clear();
+        Map<String, Object> map = new HashMap<>();
         if (memberService.isMemberExist(id, pw)) {
             String token = jwtService.createJwt(id);
             res.setHeader("Authorization", token);
@@ -176,7 +174,7 @@ public class MemberController {
     }
 
     @GetMapping("/mongotest")
-    public List<Alarm> insert() {
+    public List<Alarm> mongoTest() {
         List<Alarm> list = repo.findAll();
         System.out.println(list);
         return list;

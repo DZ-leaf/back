@@ -21,8 +21,8 @@ public class MobilePushNotificationService {
 
         ArrayList<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 
-        interceptors.add(new HeaderRequestInterceptor("Authorization", "key = " + FIREBASE_SERVER_KEY));
-        interceptors.add(new HeaderRequestInterceptor("Content-Type", "application/json; UTF-8"));
+        // interceptors.add(new HeaderRequestInterceptor("Authorization", "key = " + FIREBASE_SERVER_KEY));
+        // interceptors.add(new HeaderRequestInterceptor("Content-Type", "application/json; UTF-8"));
         restTemplate.setInterceptors(interceptors);
 
         String firebaseResponse = restTemplate.postForObject(FIREBASE_API_URL, entity, String.class);

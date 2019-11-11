@@ -1,6 +1,5 @@
 package leaf.model.dto.member;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

@@ -160,7 +160,7 @@ public class MemberController {
         return map;
     }
 
-    @PostMapping("/logintest")
+    @PostMapping("/login")
     public Map<String, Object> loginTest(HttpServletResponse res, @RequestBody Member member) {
         Map<String, Object> map = new HashMap<>();
         if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {

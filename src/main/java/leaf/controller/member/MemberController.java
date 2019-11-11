@@ -55,12 +55,12 @@ public class MemberController {
         return map;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> login() {
-        Map<String, Object> map = new HashMap<>();
-        System.out.println("/member/login");
-        return map;
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public Map<String, Object> login(String id, String pw) {
+//        Map<String, Object> map = new HashMap<>();
+//        System.out.println("/member/login");
+//        return map;
+//    }
 
     // @RequestMapping(value = "/login", method = RequestMethod.POST)
     // public Map<String, Object> login() {
@@ -160,11 +160,11 @@ public class MemberController {
         return map;
     }
 
-    @GetMapping("/logintest")
-    public Map<String, Object> loginTest(HttpServletResponse res, String id, String pw) {
+    @PostMapping("/logintest")
+    public Map<String, Object> loginTest(HttpServletResponse res, @RequestBody Member member) {
         Map<String, Object> map = new HashMap<>();
-        if (memberService.isMemberExist(id, pw)) {
-            String token = jwtService.createJwt(id);
+        if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {
+            String token = jwtService.createJwt(member.getMemberId());
             res.setHeader("Authorization", token);
             map.put("message", "success");
         } else {

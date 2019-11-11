@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -60,7 +61,6 @@ public class JwtServiceImpl implements JwtService {
     public byte[] generateKey() {
         return SALT.getBytes(StandardCharsets.UTF_8);
     }
-
     /*
      ** Claim으로 변환 도중 예외가 발생하거나 토큰이 만료되었다면 유효하지 않은 토큰으로 판단하여 Exception handling
      */

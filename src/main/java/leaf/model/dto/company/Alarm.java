@@ -24,8 +24,11 @@ public class Alarm {
 
     @Id
     private String _id;
+
     private boolean repetition; 
+
     private Date time;
+    
     private String name;
 
 }

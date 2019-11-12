@@ -9,11 +9,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class ChatMessageServiceImpl implements ChatService {
+public class ChatMessageService {
 
     ChatMessageRepository repo;
 
-    @Override
     public List<ChatMessage> getUserChat(String sender) {
         return repo.findAllBySender(sender);
     }

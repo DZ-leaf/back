@@ -17,10 +17,13 @@ import lombok.*;
 public class Company {
 
     @Id
+    @Column(name = "company_nm")
     private String companyNm;
 
+    @Column(name = "ceo")
     private String ceo;
 
+    @Column(name = "phone")
     private String phone;
 
 }

@@ -2,6 +2,7 @@ package leaf.model.dto.company;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,12 +24,16 @@ import lombok.Setter;
 public class Alarm {
 
     @Id
-    private String _id;
+    @Column(name = "_id")
+    private String idx;
 
-    private boolean repetition; 
+    @Column(name = "repetition")
+    private boolean repetition;
 
+    @Column(name = "time")
     private Date time;
-    
+
+    @Column(name = "name")
     private String name;
 
 }

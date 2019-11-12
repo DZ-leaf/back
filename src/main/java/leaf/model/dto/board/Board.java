@@ -2,7 +2,9 @@ package leaf.model.dto.board;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -22,16 +24,26 @@ import lombok.Setter;
 public class Board {
 
     @Id
-    int idx;
+    @GeneratedValue
+    @Column(name = "board_no")
+    private long idx;
 
-    String title;
+    @Column(name = "user_id")
+    private String writer;
 
-    String content;
+    @Column(name = "title")
+    private String title;
 
-    String writer;
+    @Column(name = "content")
+    private String content;
 
-    LocalDateTime creatAt;
+    @Column(name = "write_dt")
+    private LocalDateTime writeTime;
 
-    LocalDateTime modifyAt;
+    @Column(name = "like")
+    private int like;
+
+    @Column(name = "hit")
+    private int hit;
     
 }

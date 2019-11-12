@@ -1,17 +1,16 @@
 package leaf.controller.chat;
 
 import leaf.model.dto.chat.ChatMessage;
-import leaf.service.chat.ChatService;
+import leaf.model.dto.chat.ChatRoom;
+import leaf.service.chat.ChatMessageService;
+import leaf.service.chat.ChatRoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +19,8 @@ import java.util.List;
 @Controller
 public class ChatController {
 
-    ChatService service;
+    ChatMessageService messageService;
+    ChatRoomService roomService;
 
     @MessageMapping("/sendMessage") // "/sendMessage" 라는 API로 Mapping됨
     @SendTo("/topic/public") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
@@ -45,7 +45,17 @@ public class ChatController {
     @ResponseBody
     @GetMapping("/userchat")
     public List<ChatMessage> getUserChat(@RequestParam String sender) {
-        return service.getUserChat(sender);
+        return messageService.getUserChat(sender);
+    }
+
+    @ResponseBody
+    @PostMapping("/newchatroom")
+    public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
+        System.out.println(chatRoom.getChatRoomIdx());
+        System.out.println(chatRoom.getChatRoomMemberNum());
+        System.out.println(chatRoom.getChatRoomName());
+        System.out.println(chatRoom.getChatRoomOpenDate());
+        roomService.makeNewChatRoom(chatRoom);
     }
 
 }

@@ -1,5 +1,6 @@
 package leaf.model.dto.member;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,20 +16,28 @@ import lombok.*;
 public class Member {
 
     @Id
+    @Column(name = "member_id")
     private String memberId;
-    
-    private String memberPw;
-    
-    private String memberNm;
 
+    @Column(name = "member_pw")
+    private String memberPw;
+
+    @Column(name = "member_nm")
+    private String memberName;
+
+    @Column(name = "email")
     private String email;
 
-    private String companyNm;
-    
-    private String departmentNm;
-    
+    @Column(name = "company_nm")
+    private String companyName;
+
+    @Column(name = "department_nm")
+    private String departmentName;
+
+    @Column(name = "position")
     private String position;
-    
+
+    @Column(name = "profile")
     private String profile;
 
 }

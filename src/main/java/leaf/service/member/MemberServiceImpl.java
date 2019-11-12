@@ -11,12 +11,12 @@ import leaf.model.dto.member.Member;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository dao;
+    private final MemberRepository repo;
 
     @Override
     public boolean register(Member model) {
         try {
-            dao.saveAndFlush(model);
+            repo.saveAndFlush(model);
             return true;
         } catch (Exception e) {
             return false;
@@ -25,18 +25,18 @@ public class MemberServiceImpl implements MemberService {
 
     // @Override
     // public MemberList login(String id) {
-    // return dao.getOne(id);
+    // return repo.getOne(id);
     // }
 
     @Override
     public Member getModel(String id) {
-        return dao.findById(id).get();
+        return repo.findById(id).get();
     }
 
     @Override
     public String idCheck(String id) {
         try {
-            dao.findById(id).get();
+            repo.findById(id).get();
             return "fail";
         } catch (Exception e) {
             return "success";
@@ -52,13 +52,13 @@ public class MemberServiceImpl implements MemberService {
     // 로그인 요청 시 회원의 ID와 Password가 맞는지 확인
     @Override
     public boolean isMemberExist(String id, String pw) {
-        return !dao.findByMemberIdAndMemberPw(id, pw).isEmpty();
+        return !repo.findByMemberIdAndMemberPw(id, pw).isEmpty();
     }
 
     @Override
     public String findId(String name, String email) {
         try {
-            return dao.findByMemberNmAndEmail(name, email).get(0).getMemberId();
+            return repo.findByMemberNmAndEmail(name, email).get(0).getMemberId();
         } catch (Exception e) {
             return null;
         }
@@ -67,7 +67,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String findPw(String id, String email) {
         try {
-            return dao.findByMemberIdAndEmail(id, email).get(0).getMemberPw();
+            return repo.findByMemberIdAndEmail(id, email).get(0).getMemberPw();
         } catch (Exception e) {
             return null;
         }
@@ -78,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
     public boolean changePw(String id, String pw) {
         try {
             System.out.println("1");
-            Member list = dao.getOne(id);
+            Member list = repo.getOne(id);
             System.out.println("2");
             System.out.println(pw);
             System.out.println("3");
@@ -88,7 +88,7 @@ public class MemberServiceImpl implements MemberService {
                 return false;
             System.out.println("5");
             list.setMemberPw(pw);
-            dao.save(list);
+            repo.save(list);
             return true;
         } catch (Exception e) {
             return false;

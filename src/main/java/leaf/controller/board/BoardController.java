@@ -5,12 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
-/**
- * BoardController
- */
-@RestController
-@CrossOrigin("origin-allowed=*")
+@CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
+@RestController
 public class BoardController {
 
     

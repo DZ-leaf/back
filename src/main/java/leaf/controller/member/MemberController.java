@@ -21,9 +21,9 @@ import java.util.Map;
 
 // import leaf.controller.S3Uploader;
 
-@RestController
 @CrossOrigin("origin-allowed=*")
 @AllArgsConstructor
+@RestController
 @RequestMapping(value = "/member")
 public class MemberController {
 
@@ -35,6 +35,19 @@ public class MemberController {
     private S3FileIO s3uploader;
 
     // 진짜 코드 (수정 금지)
+
+    @PostMapping("/login")
+    public Map<String, Object> loginTest(HttpServletResponse res, @RequestBody Member member) {
+        Map<String, Object> map = new HashMap<>();
+        if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {
+            String token = jwtService.createJwt(member.getMemberId());
+            res.setHeader("Authorization", token);
+            map.put("message", "success");
+        } else {
+            map.put("message", "fail");
+        }
+        return map;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Map<String, Object> register(@RequestBody Member model) {
@@ -54,19 +67,6 @@ public class MemberController {
 
         return map;
     }
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public Map<String, Object> login(String id, String pw) {
-//        Map<String, Object> map = new HashMap<>();
-//        System.out.println("/member/login");
-//        return map;
-//    }
-
-    // @RequestMapping(value = "/login", method = RequestMethod.POST)
-    // public Map<String, Object> login() {
-    // System.out.println("/member/login");
-    // return map;
-    // }
 
     @RequestMapping(value = "/findCompany", method = RequestMethod.POST)
     public Map<String, Object> findCompany(@RequestBody Object obj) {
@@ -160,24 +160,9 @@ public class MemberController {
         return map;
     }
 
-    @PostMapping("/login")
-    public Map<String, Object> loginTest(HttpServletResponse res, @RequestBody Member member) {
-        Map<String, Object> map = new HashMap<>();
-        if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {
-            String token = jwtService.createJwt(member.getMemberId());
-            res.setHeader("Authorization", token);
-            map.put("message", "success");
-        } else {
-            map.put("message", "fail");
-        }
-        return map;
-    }
-
     @GetMapping("/mongotest")
     public List<Alarm> mongoTest() {
-        List<Alarm> list = repo.findAll();
-        System.out.println(list);
-        return list;
+        return repo.findAll();
     }
 
     // @RequestMapping(value = "/s3put", method = RequestMethod.GET)

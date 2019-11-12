@@ -16,14 +16,14 @@ import java.util.Vector;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
-    private CompanyRepository dao;
+    private CompanyRepository repo;
 
     public Vector<Map<String,String>> findCompany(String company) {
         String str = "%" + company + "%";
         System.out.println(str);
         Vector<Map<String,String>> list = new Vector<>();
-        for (Company item : dao.findByCompanyNmLike(str)) {
-            Map<String,String> map = new HashMap<String,String>();
+        for (Company item : repo.findByCompanyNmLike(str)) {
+            Map<String,String> map = new HashMap<>();
             map.put("companyNm",item.getCompanyNm());
             list.add(map);
         }

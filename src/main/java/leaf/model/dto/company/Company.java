@@ -18,7 +18,7 @@ public class Company {
 
     @Id
     @Column(name = "company_nm")
-    private String companyNm;
+    private String companyName;
 
     @Column(name = "ceo")
     private String ceo;

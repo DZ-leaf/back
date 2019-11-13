@@ -22,9 +22,9 @@ public class CompanyServiceImpl implements CompanyService {
         String str = "%" + company + "%";
         System.out.println(str);
         Vector<Map<String,String>> list = new Vector<>();
-        for (Company item : repo.findByCompanyNmLike(str)) {
+        for (Company item : repo.findByCompanyNameLike(str)) {
             Map<String,String> map = new HashMap<>();
-            map.put("companyNm",item.getCompanyNm());
+            map.put("companyNm",item.getCompanyName());
             list.add(map);
         }
         return list;

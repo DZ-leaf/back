@@ -11,9 +11,9 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     // @Query(nativeQuery = true, value = "SELECT * FROM member.member_list WHERE userId")
     // memberList findByUsername(String userId);
 
-    List<Member> findByCompanyNmLike(String companyNm);
+    List<Member> findByCompanyNameLike(String companyNm);
 
-    List<Member> findByMemberNmAndEmail(String memberNm, String email);
+    List<Member> findByMemberNameAndEmail(String memberNm, String email);
 
     List<Member> findByMemberIdAndEmail(String memberId, String email);
 

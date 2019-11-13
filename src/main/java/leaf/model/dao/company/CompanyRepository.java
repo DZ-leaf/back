@@ -8,6 +8,6 @@ import leaf.model.dto.company.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, String> {
 
-    List<Company> findByCompanyNmLike(String companyNm);
+    List<Company> findByCompanyNameLike(String companyName);
 
 }

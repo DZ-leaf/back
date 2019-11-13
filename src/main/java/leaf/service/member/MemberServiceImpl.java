@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String findId(String name, String email) {
         try {
-            return repo.findByMemberNmAndEmail(name, email).get(0).getMemberId();
+            return repo.findByMemberNameAndEmail(name, email).get(0).getMemberId();
         } catch (Exception e) {
             return null;
         }

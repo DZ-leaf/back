@@ -12,7 +12,9 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
 
 @CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
@@ -61,8 +63,8 @@ public class ChatController {
 
     @ResponseBody
     @GetMapping("/getrooms")
-    public void getChatRooms(@RequestParam Object memberId) {
-        System.out.println(memberId.toString());
+    public void getChatRooms(@RequestParam String memberId, HttpServletRequest req) {
+        System.out.println(req.getAttribute("memberinfo"));
     }
 
 }

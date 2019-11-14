@@ -4,10 +4,10 @@ package leaf.controller.member;
 import leaf.model.dao.company.AlarmRepository;
 import leaf.model.dto.company.Alarm;
 import leaf.model.dto.member.Member;
+import leaf.component.jwt.Jwt;
+import leaf.component.s3.S3FileIO;
 import leaf.service.company.CompanyService;
-import leaf.service.jwt.JwtService;
 import leaf.service.member.MemberService;
-import leaf.service.s3.S3FileIO;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 // import leaf.controller.S3Uploader;
 
-@CrossOrigin("origin-allowed=*")
+@CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/member")
@@ -29,32 +29,48 @@ public class MemberController {
 
     private MemberService memberService;
     private CompanyService companyService;
-    private JwtService jwtService;
+    private Jwt jwt;
     private JavaMailSender javaMailSender;
     private AlarmRepository repo;
     private S3FileIO s3uploader;
 
     // 진짜 코드 (수정 금지)
 
+//    @PostMapping("/login")
+//    public Map<String, Object> login(@RequestBody Member member, HttpServletResponse res) {
+//        Map<String, Object> map = new HashMap<>();
+//        if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {
+//            String token = jwtService.createJwt(member.getMemberId());
+//            res.setHeader("Authorization", token);
+//            map.put("message", "success");
+//            map.put("info", member.getMemberName());
+//        } else {
+//            map.put("message", "fail");
+//        }
+//        return map;
+//    }
+
     @PostMapping("/login")
-    public Map<String, Object> loginTest(HttpServletResponse res, @RequestBody Member member) {
+    public Map<String, Object> login(@RequestBody Member member, HttpServletResponse res) {
         Map<String, Object> map = new HashMap<>();
-        if (memberService.isMemberExist(member.getMemberId(), member.getMemberPw())) {
-            String token = jwtService.createJwt(member.getMemberId());
+        Member memberData = memberService.login(member.getMemberId(), member.getMemberPw());
+        if (memberData == null) {
+            map.put("message", "fail");
+        } else {
+            String token = jwt.createJwt(member.getMemberId());
             res.setHeader("Authorization", token);
             map.put("message", "success");
-        } else {
-            map.put("message", "fail");
+            map.put("info", memberData.getMemberName());
         }
         return map;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Map<String, Object> register(@RequestBody Member model) {
+    public Map<String, Object> register(@RequestBody Member member) {
         Map<String, Object> map = new HashMap<>();
         System.out.println("/member/register");
-        System.out.println(model);
-        map.put("message", memberService.register(model) ? "success" : "fail");
+        System.out.println(member);
+        map.put("message", memberService.register(member) ? "success" : "fail");
         return map;
     }
 

@@ -1,4 +1,4 @@
-package leaf.service.chat;
+package leaf.component.websocket;
 
 import leaf.model.dto.chat.ChatMessage;
 import lombok.AllArgsConstructor;

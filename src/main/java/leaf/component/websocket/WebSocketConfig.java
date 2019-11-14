@@ -1,4 +1,4 @@
-package leaf.service.chat;
+package leaf.component.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

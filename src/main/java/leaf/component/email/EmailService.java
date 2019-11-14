@@ -1,5 +1,5 @@
 
-// package leaf.service.email;
+// package leaf.component.email;
 
 // import javax.validation.constraints.Email;
 

@@ -1,4 +1,4 @@
-//package leaf.service.fcm;
+//package leaf.component.fcm;
 //
 //import org.springframework.http.HttpEntity;
 //import org.springframework.http.client.ClientHttpRequestInterceptor;

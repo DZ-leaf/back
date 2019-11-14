@@ -1,4 +1,4 @@
-package leaf.service.jwt;
+package leaf.component.jwt;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

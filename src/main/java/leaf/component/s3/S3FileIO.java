@@ -1,4 +1,4 @@
-package leaf.service.s3;
+package leaf.component.s3;
 
 import java.io.File;
 import java.nio.file.Paths;

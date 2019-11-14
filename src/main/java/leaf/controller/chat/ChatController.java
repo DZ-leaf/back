@@ -17,6 +17,7 @@ import java.util.List;
 @CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
 @Controller
+@RequestMapping("/chat")
 public class ChatController {
 
     ChatMessageService messageService;
@@ -56,6 +57,12 @@ public class ChatController {
         System.out.println(chatRoom.getChatRoomName());
         System.out.println(chatRoom.getChatRoomOpenDate());
         roomService.makeNewChatRoom(chatRoom);
+    }
+
+    @ResponseBody
+    @GetMapping("/getrooms")
+    public void getChatRooms(@RequestParam Object memberId) {
+        System.out.println(memberId.toString());
     }
 
 }

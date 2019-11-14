@@ -1,11 +1,10 @@
-package leaf.service.jwt;
+package leaf.component.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -17,8 +16,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
-public class JwtServiceImpl implements JwtService {
+@Component
+public class Jwt {
 
     /*
      ** Salt, for Signature Hash
@@ -71,7 +70,7 @@ public class JwtServiceImpl implements JwtService {
             Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
-            throw new UnauthorizedException();
+            throw new RuntimeException("로그인 유지 시간이 만료되었습니다. 다시 로그인을 해 주세요.");
         }
     }
 
@@ -89,7 +88,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
         } catch (Exception e) {
-            throw new UnauthorizedException();
+            throw new RuntimeException();
         }
         return claims.getBody();
     }
@@ -104,7 +103,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
         } catch (Exception e) {
-            throw new UnauthorizedException();
+            throw new RuntimeException();
         }
         return claims.getBody().get(key);
     }

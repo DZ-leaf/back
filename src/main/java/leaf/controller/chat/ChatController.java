@@ -12,11 +12,18 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 @CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
 @Controller
+@Transactional
 @RequestMapping("/chat")
 public class ChatController {
 
@@ -60,9 +67,15 @@ public class ChatController {
     }
 
     @ResponseBody
-    @GetMapping("/getrooms")
-    public void getChatRooms(@RequestParam Object memberId) {
-        System.out.println(memberId.toString());
+    @GetMapping("/getRooms")
+    public Map<String, Object> getChatRooms(HttpServletRequest req) {
+        Object member  = req.getAttribute("memberinfo");
+        System.out.println("member");
+        System.out.println(member);
+        Map<String, Object> map = new HashMap<>();
+        map.put("message", "success");
+        
+        return map;
     }
 
 }

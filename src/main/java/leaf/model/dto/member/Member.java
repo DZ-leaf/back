@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
+@ToString
 @Builder
 @Entity
 @Table(schema = "member", name = "member_list")

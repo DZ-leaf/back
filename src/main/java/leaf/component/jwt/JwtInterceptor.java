@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 @Component
 @AllArgsConstructor
@@ -17,11 +18,15 @@ public class JwtInterceptor implements HandlerInterceptor {
     private MemberService memberService;
 
     @Override
+    @Transactional
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
         final String token = req.getHeader("Authorization");
+        System.out.println(req.getRequestURI());
+        String str = "";
         if (token != null && jwt.isUsable(token)) {
-            res.setHeader("Authorization", jwt.createJwt((jwt.getTokenValue("aud").toString())));
-            Member member = memberService.getMemberData(jwt.getTokenValue("aud").toString());
+            str = jwt.getTokenValue("aud").toString();
+            res.setHeader("Authorization", jwt.createJwt(str));
+            Member member = memberService.getMember(str);
             req.setAttribute("memberinfo", member);
             return true;
         } else {

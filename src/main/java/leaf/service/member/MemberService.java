@@ -9,6 +9,7 @@ import leaf.model.dto.member.Member;
 
 import javax.transaction.Transactional;
 
+@Transactional
 @AllArgsConstructor
 @Service
 public class MemberService {
@@ -24,7 +25,6 @@ public class MemberService {
         }
     }
 
-     @Transactional
      public Member login(String id, String pw) {
         if (!this.isMemberExist(id, pw)) {
             return null;
@@ -32,9 +32,16 @@ public class MemberService {
         return this.getMemberData(id);
      }
 
-    public Member getModel(String id) {
+    public Member getMember(String id) {
         return repo.findById(id).get();
     }
+
+    public Member getMemberData(String id) {
+        
+        return repo.getOne(id);
+    }
+
+
 
     public String idCheck(String id) {
         try {
@@ -55,10 +62,7 @@ public class MemberService {
         return !repo.findByMemberIdAndMemberPw(id, pw).isEmpty();
     }
 
-    public Member getMemberData(String id) {
-        return repo.getOne(id);
-    }
-
+ 
     public String findId(String name, String email) {
         try {
             return repo.findByMemberNameAndEmail(name, email).get(0).getMemberId();

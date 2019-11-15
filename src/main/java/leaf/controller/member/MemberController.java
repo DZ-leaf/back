@@ -61,7 +61,7 @@ public class MemberController {
             res.setHeader("Authorization", token);
             map.put("message", "success");
             map.put("info", memberData.getMemberName());
-        }
+    }
         return map;
     }
 

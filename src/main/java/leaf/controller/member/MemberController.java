@@ -59,10 +59,10 @@ public class MemberController {
         if (memberData == null) {
             map.put("message", "fail");
         } else {
-            String token = jwt.createJwt(member.getMemberId());
+            String token = jwt.createJwt(memberData.getMemberId());
             res.setHeader("Authorization", token);
+            map.put("member", memberData);           
             map.put("message", "success");
-            map.put("info", memberData.getMemberName());
         }
         return map;
     }

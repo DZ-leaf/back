@@ -52,6 +52,8 @@ public class MemberController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Member member, HttpServletResponse res) {
+        System.out.println("/member/login");
+        System.out.println(member);
         Map<String, Object> map = new HashMap<>();
         Member memberData = memberService.login(member.getMemberId(), member.getMemberPw());
         if (memberData == null) {

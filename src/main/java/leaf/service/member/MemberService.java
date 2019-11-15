@@ -5,6 +5,8 @@ import leaf.model.dto.member.Member;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @AllArgsConstructor
 @Service
 public class MemberService {
@@ -24,10 +26,10 @@ public class MemberService {
         if (!this.isMemberExist(id, pw)) {
             return null;
         }
-        return this.getMemberData(id);
+        return this.getMember(id);
      }
 
-    public Member getModel(String id) {
+    public Member getMember(String id) {
         return repo.findById(id).get();
     }
 
@@ -49,11 +51,6 @@ public class MemberService {
     public boolean isMemberExist(String id, String pw) {
         return !repo.findByMemberIdAndMemberPw(id, pw).isEmpty();
     }
-
-    public Member getMemberData(String id) {
-        return repo.findById(id).orElse(null);
-    }
-
 
     public String findId(String name, String email) {
         try {

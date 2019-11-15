@@ -52,16 +52,18 @@ public class MemberController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Member member, HttpServletResponse res) {
+        System.out.println("/member/login");
+        System.out.println(member);
         Map<String, Object> map = new HashMap<>();
         Member memberData = memberService.login(member.getMemberId(), member.getMemberPw());
         if (memberData == null) {
             map.put("message", "fail");
         } else {
-            String token = jwt.createJwt(member.getMemberId());
+            String token = jwt.createJwt(memberData.getMemberId());
             res.setHeader("Authorization", token);
+            map.put("member", memberData);           
             map.put("message", "success");
-            map.put("info", memberData.getMemberName());
-    }
+        }
         return map;
     }
 

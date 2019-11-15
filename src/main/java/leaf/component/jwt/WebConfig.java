@@ -12,7 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
     private JwtInterceptor jwtInterceptor;
 
     private static final String[] EXCLUDE_PATHS = { 
-        "/member/**"
+        "/member/*" ,
+        "/error/*" 
     };
 
     @Override

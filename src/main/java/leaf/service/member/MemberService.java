@@ -28,19 +28,12 @@ public class MemberService {
         if (!this.isMemberExist(id, pw)) {
             return null;
         }
-        return this.getMemberData(id);
+        return this.getMember(id);
      }
 
     public Member getMember(String id) {
         return repo.findById(id).get();
     }
-
-    public Member getMemberData(String id) {
-        
-        return repo.getOne(id);
-    }
-
-
 
     public String idCheck(String id) {
         try {

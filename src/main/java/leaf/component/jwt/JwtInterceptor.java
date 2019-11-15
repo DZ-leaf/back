@@ -17,8 +17,8 @@ public class JwtInterceptor implements HandlerInterceptor {
     private Jwt jwt;
     private MemberService memberService;
 
-    @Override
     @Transactional
+    @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
         final String token = req.getHeader("Authorization");
         System.out.println(req.getRequestURI());

@@ -14,8 +14,8 @@ public class ChatMessage {
 
     private Long roomIdx;
     private String roomName;
-    private String sender;
-    private String content;
-    private LocalDateTime sendTime;
+    private String name;
+    private String text;
+    private LocalDateTime createdAt;
 
 }

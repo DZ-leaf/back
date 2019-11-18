@@ -49,23 +49,25 @@ public class ChatController {
         System.out.println(chatMessage);
         System.out.println("-------------------");
         // Add user in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getName());
         return chatMessage;
     }
 
     // Message put test
     @PutMapping("/inputmessage")
     public ChatMessage inputMessage(@RequestBody ChatMessage chatMessage) {
-        chatMessage.setSendTime(LocalDateTime.now());
+        chatMessage.setCreatedAt(LocalDateTime.now());
         messageService.putMessage(chatMessage);
         return chatMessage;
     }
 
     @ResponseBody
-    @GetMapping("/getchat")
-    public List<ChatMessage> getChat(@RequestParam Long roomIdx) {
+    @GetMapping("/getPastMessage/{roomIdx}")
+    public List<ChatMessage> getChat(@PathVariable Long roomIdx) {
+        System.out.println(messageService.getAllMessage(roomIdx));
         return messageService.getAllMessage(roomIdx);
     }
+
     @ResponseBody
     @PostMapping("/newchatroom")
     public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {

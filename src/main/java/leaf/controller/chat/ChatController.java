@@ -66,10 +66,10 @@ public class ChatController {
     public List<ChatMessage> getChat(@RequestParam Long roomIdx) {
         return messageService.getAllMessage(roomIdx);
     }
-
     @ResponseBody
     @PostMapping("/newchatroom")
     public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
+
     }
 
     @ResponseBody

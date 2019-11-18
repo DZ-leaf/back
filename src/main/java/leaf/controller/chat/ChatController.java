@@ -64,7 +64,6 @@ public class ChatController {
     @ResponseBody
     @GetMapping("/getPastMessage/{roomIdx}")
     public List<ChatMessage> getChat(@PathVariable Long roomIdx) {
-        System.out.println(messageService.getAllMessage(roomIdx));
         return messageService.getAllMessage(roomIdx);
     }
 

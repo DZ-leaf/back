@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @AllArgsConstructor
 @Component
 public class WebSocketEventListener {
@@ -26,7 +29,8 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionDisconnectEvent event) {
-        String username = (String) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
+//        String username = (String) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
+        Map<String, Object> username = (HashMap<String, Object>) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
 
         if (username != null) {
             logger.info("User Disconnected : " + username);

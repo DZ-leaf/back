@@ -28,7 +28,6 @@ public class JwtInterceptor implements HandlerInterceptor {
             res.setHeader("Authorization", jwt.createJwt(str));
             Member member = memberService.getMember(str);
             req.setAttribute("memberinfo", member);
-            System.out.println("token = " + token);
             return true;
         } else {
             throw new RuntimeException("다시 로그인을 해 주세요.");

@@ -8,10 +8,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.json.JSONObject;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,13 +37,26 @@ public class ChatController {
     GroupService groupService;
     ChatMessageService messageService;
     ChatRoomService roomService;
+    
+    @MessageMapping("/sendMessage/{chatRoomCd}") // "/sendMessage" 라는 API로 Mapping됨
+    @SendTo("/chat/message/{chatRoomCd}") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
+    public String sendMessage(@DestinationVariable String chatRoomCd, @Payload @RequestBody String chatMessage) {
 
-    @MessageMapping("/sendMessage") // "/sendMessage" 라는 API로 Mapping됨
-    @SendTo("/topic/public") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
-    public ChatMessage sendMessage(@Payload @RequestBody ChatMessage chatMessage) {
-        messageService.putMessage(chatMessage);
+
         return chatMessage;
     }
+
+    @MessageMapping("/chat.message/{chatRoomId}")
+    @SendTo("/chat/message/{chatRoomCd}")
+    public boolean sendMessage1(@DestinationVariable String chatRoomId, @Payload ChatMessage chatMessage) {
+        System.out.println(chatRoomId);
+        System.out.println(chatMessage);
+        // if (chatMessage.getMessageType() == MessageType.CHAT) {
+        //     chatService.sendMessage(chatRoomId, chatMessage);
+        // }
+        return true;
+    }
+
 
     @MessageMapping("/addUser")
     @SendTo("/topic/public")

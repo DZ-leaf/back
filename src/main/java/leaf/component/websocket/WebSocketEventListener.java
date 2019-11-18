@@ -24,22 +24,28 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        logger.info("User Connected");
+        System.out.println(event);
+        System.out.println("conn");
     }
+
+    
+    
+    
 
     @EventListener
     public void handleWebSocketConnectListener(SessionDisconnectEvent event) {
+        System.out.println("disconn");
 //        String username = (String) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
-        Map<String, Object> username = (HashMap<String, Object>) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
+        // Map<String, Object> username = (HashMap<String, Object>) StompHeaderAccessor.wrap(event.getMessage()).getSessionAttributes().get("username");
 
-        if (username != null) {
-            logger.info("User Disconnected : " + username);
+        // if (username != null) {
+        //     logger.info("User Disconnected : " + username);
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setName(username);
+        //     ChatMessage chatMessage = new ChatMessage();
+        //     chatMessage.setName(username);
 
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
-        }
+            // messagingTemplate.convertAndSend("/chat/public");
+        // }
     }
 
 }

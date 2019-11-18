@@ -13,8 +13,4 @@ public class ChatMessageService {
 
     ChatMessageRepository repo;
 
-    public List<ChatMessage> getUserChat(String sender) {
-        return repo.findAllBySender(sender);
-    }
-
 }

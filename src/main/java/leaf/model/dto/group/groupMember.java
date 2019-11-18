@@ -1,26 +1,27 @@
-// package leaf.model.dto.group;
+package leaf.model.dto.group;
 
-// import javax.persistence.*;
+import javax.persistence.*;
 
-// import lombok.*;
+import lombok.*;
 
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Getter @Setter
-// @ToString
-// @Entity
-// @Table(schema = "group", name = "group_member")
-// public class groupMember {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@ToString
+@Entity
+@Table(schema = "groups", name = "group_member_list")
+@Builder
+public class GroupMember {
     
-//     @Id
-//     @GeneratedValue(strategy=GenerationType.AUTO)
-//     @Column(name="group_member_id")
-//     private Long groupMemberId;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="group_member_cd")
+    private Long groupMemberCd;
 
-//     @Column(name = "group_nm")
-//     private String groupNM;
+    @Column(name = "group_nm")
+    private String groupNm;
 
-//     @Column(name = "member_id")
-//     private String memberId;
+    @Column(name = "member_id")
+    private String memberId;
 
-// }
+}

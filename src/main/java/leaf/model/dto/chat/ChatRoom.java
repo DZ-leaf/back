@@ -1,33 +1,27 @@
 package leaf.model.dto.chat;
 
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
+import javax.persistence.*;
 
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Builder
-@Document(collection = "chatroom")
+@Entity
+@Table(schema = "chat", name = "room_list")
 public class ChatRoom {
 
     @Id
-    @GeneratedValue
-    @Column(name = "chatroom_cd")
-    private long chatRoomIdx;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "room_cd")
+    private long roomCd;
 
-    @Column(name = "chatroom_nm")
-    private String chatRoomName;
+    @Column(name = "room_nm")
+    private String roomNm;
 
-    @Column(name = "chatroom_member_nm")
-    private String chatRoomMemberNum;
-
-    @Column(name = "chatroom_open_dt")
-    private LocalDateTime chatRoomOpenDate;
+    @Column(name = "room_type")
+    private String roomType;
 
 }

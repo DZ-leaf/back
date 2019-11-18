@@ -1,24 +1,32 @@
 package leaf.controller.chat;
 
-import leaf.model.dto.chat.ChatMessage;
-import leaf.model.dto.chat.ChatRoom;
-import leaf.service.chat.ChatMessageService;
-import leaf.service.chat.ChatRoomService;
-import lombok.AllArgsConstructor;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import leaf.model.dto.chat.ChatMessage;
+import leaf.model.dto.chat.ChatRoom;
+import leaf.model.dto.member.Member;
+import leaf.service.chat.ChatMessageService;
+import leaf.service.chat.ChatRoomService;
+import leaf.service.group.GroupService;
+import lombok.AllArgsConstructor;
 
 
 @CrossOrigin("origin-allowed = *")
@@ -28,6 +36,7 @@ import javax.transaction.Transactional;
 @RequestMapping("/chat")
 public class ChatController {
 
+    GroupService groupService;
     ChatMessageService messageService;
     ChatRoomService roomService;
 
@@ -54,28 +63,29 @@ public class ChatController {
     @ResponseBody
     @GetMapping("/userchat")
     public List<ChatMessage> getUserChat(@RequestParam String sender) {
-        return messageService.getUserChat(sender);
+        return null;
+        
     }
 
     @ResponseBody
     @PostMapping("/newchatroom")
     public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
-        System.out.println(chatRoom.getChatRoomIdx());
-        System.out.println(chatRoom.getChatRoomMemberNum());
-        System.out.println(chatRoom.getChatRoomName());
-        System.out.println(chatRoom.getChatRoomOpenDate());
-        roomService.makeNewChatRoom(chatRoom);
     }
 
     @ResponseBody
     @GetMapping("/getRooms")
     public Map<String, Object> getChatRooms(HttpServletRequest req) {
-        Object member  = req.getAttribute("memberinfo");
+        Member member  = (Member)req.getAttribute("memberinfo");
         System.out.println("member");
         System.out.println(member);
+
+        List<ChatRoom> roomList = groupService.getRoomList(member);
+        System.out.println("roomList");
+        System.out.println(roomList);
         Map<String, Object> map = new HashMap<>();
         map.put("message", "success");
-        
+        map.put("rooms",roomList);
+        System.out.println(map);
         return map;
     }
 

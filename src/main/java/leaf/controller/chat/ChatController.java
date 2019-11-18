@@ -56,7 +56,6 @@ public class ChatController {
     // Message put test
     @PutMapping("/inputmessage")
     public ChatMessage inputMessage(@RequestBody ChatMessage chatMessage) {
-        chatMessage.setCreatedAt(LocalDateTime.now());
         messageService.putMessage(chatMessage);
         return chatMessage;
     }

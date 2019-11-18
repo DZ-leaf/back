@@ -10,6 +10,4 @@ public class ChatRoomService {
 
     ChatRoomRepository repo;
 
-
-
 }

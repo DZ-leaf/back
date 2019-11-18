@@ -1,4 +1,3 @@
-
 package leaf.service.member;
 
 import leaf.model.dao.member.MemberRepository;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@Transactional
 @AllArgsConstructor
 @Service
 public class MemberService {
@@ -54,7 +52,6 @@ public class MemberService {
         return !repo.findByMemberIdAndMemberPw(id, pw).isEmpty();
     }
 
- 
     public String findId(String name, String email) {
         try {
             return repo.findByMemberNameAndEmail(name, email).get(0).getMemberId();

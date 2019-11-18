@@ -1,23 +1,5 @@
 package leaf.controller.chat;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
-
-import org.json.JSONObject;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
 import leaf.model.dto.chat.ChatMessage;
 import leaf.model.dto.chat.ChatRoom;
 import leaf.model.dto.member.Member;
@@ -25,6 +7,19 @@ import leaf.service.chat.ChatMessageService;
 import leaf.service.chat.ChatRoomService;
 import leaf.service.group.GroupService;
 import lombok.AllArgsConstructor;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin("origin-allowed = *")
@@ -37,12 +32,11 @@ public class ChatController {
     GroupService groupService;
     ChatMessageService messageService;
     ChatRoomService roomService;
-    
+
     @MessageMapping("/sendMessage/{chatRoomCd}") // "/sendMessage" 라는 API로 Mapping됨
     @SendTo("/chat/message/{chatRoomCd}") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
-    public String sendMessage(@DestinationVariable String chatRoomCd, @Payload @RequestBody String chatMessage) {
-
-
+    public ChatMessage sendMessage(@DestinationVariable String chatRoomCd, @Payload @RequestBody ChatMessage chatMessage) {
+        messageService.putMessage(chatMessage);
         return chatMessage;
     }
 
@@ -65,7 +59,7 @@ public class ChatController {
         System.out.println(chatMessage);
         System.out.println("-------------------");
         // Add user in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getName());
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getUser());
         return chatMessage;
     }
 

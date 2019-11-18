@@ -15,11 +15,11 @@ import java.util.Map;
 public class ChatMessage {
 
     @Id
-    private Long id;
+    private Long _id;
     private Long roomIdx;
     private String roomName;
-    private Map<String, Object> name;
+    private Map<String, Object> user;
     private String text;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
 }

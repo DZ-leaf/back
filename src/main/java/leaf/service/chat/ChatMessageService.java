@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,12 +18,12 @@ public class ChatMessageService {
     SequenceGenerator sequenceGenerator;
 
     public List<ChatMessage> getAllMessage(Long roomIdx) {
-        return repo.findAllByRoomIdxOrderByCreatedAt(roomIdx);
+        return repo.findAllByRoomIdxOrderByCreatedAtDesc(roomIdx);
     }
 
     public void putMessage(ChatMessage message) {
-        message.setId(sequenceGenerator.getNextSequenceId(SequenceGenerator.SEQ_KEY));
-        message.setCreatedAt(LocalDateTime.now());
+        message.set_id(sequenceGenerator.getNextSequenceId(SequenceGenerator.SEQ_KEY));
+        message.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         repo.insert(message);
     }
 

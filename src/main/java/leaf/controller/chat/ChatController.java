@@ -66,9 +66,12 @@ public class ChatController {
         return null;
         
     }
-
     @ResponseBody
     @PostMapping("/newchatroom")
+    public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
+    }
+    @ResponseBody
+    @GetMapping("/getPastMessage")
     public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
     }
 

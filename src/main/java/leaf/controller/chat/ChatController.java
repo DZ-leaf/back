@@ -1,5 +1,6 @@
 package leaf.controller.chat;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import leaf.model.dto.chat.ChatMessage;
 import leaf.model.dto.chat.ChatRoom;
@@ -42,10 +37,8 @@ public class ChatController {
 
     @MessageMapping("/sendMessage") // "/sendMessage" 라는 API로 Mapping됨
     @SendTo("/topic/public") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-        System.out.println("-------------------");
-        System.out.println(chatMessage.getSender());
-        System.out.println("===================");
+    public ChatMessage sendMessage(@Payload @RequestBody ChatMessage chatMessage) {
+        messageService.putMessage(chatMessage);
         return chatMessage;
     }
 
@@ -60,11 +53,18 @@ public class ChatController {
         return chatMessage;
     }
 
+    // Message put test
+    @PutMapping("/inputmessage")
+    public ChatMessage inputMessage(@RequestBody ChatMessage chatMessage) {
+        chatMessage.setSendTime(LocalDateTime.now());
+        messageService.putMessage(chatMessage);
+        return chatMessage;
+    }
+
     @ResponseBody
-    @GetMapping("/userchat")
-    public List<ChatMessage> getUserChat(@RequestParam String sender) {
-        return null;
-        
+    @GetMapping("/getchat")
+    public List<ChatMessage> getChat(@RequestParam Long roomIdx) {
+        return messageService.getAllMessage(roomIdx);
     }
 
     @ResponseBody

@@ -13,4 +13,12 @@ public class ChatMessageService {
 
     ChatMessageRepository repo;
 
+    public List<ChatMessage> getAllMessage(Long roomIdx) {
+        return repo.findAllByRoomIdxOrderBySendTime(roomIdx);
+    }
+
+    public void putMessage(ChatMessage message) {
+        repo.insert(message);
+    }
+
 }

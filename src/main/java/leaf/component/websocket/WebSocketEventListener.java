@@ -24,8 +24,7 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        System.out.println(event);
-        System.out.println("conn");
+
     }
 
     

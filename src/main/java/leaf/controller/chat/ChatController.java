@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @CrossOrigin("origin-allowed = *")
 @AllArgsConstructor
 @Controller
@@ -35,37 +34,8 @@ public class ChatController {
 
     @MessageMapping("/sendMessage/{chatRoomCd}") // "/sendMessage" 라는 API로 Mapping됨
     @SendTo("/chat/message/{chatRoomCd}") // "topic/public" 이라는 API를 Subscribe하고 있는 Client들에게 Broadcast
-    public ChatMessage sendMessage(@DestinationVariable String chatRoomCd, @Payload @RequestBody ChatMessage chatMessage) {
-        messageService.putMessage(chatMessage);
-        return chatMessage;
-    }
-
-    @MessageMapping("/chat.message/{chatRoomId}")
-    @SendTo("/chat/message/{chatRoomCd}")
-    public boolean sendMessage1(@DestinationVariable String chatRoomId, @Payload ChatMessage chatMessage) {
-        System.out.println(chatRoomId);
-        System.out.println(chatMessage);
-        // if (chatMessage.getMessageType() == MessageType.CHAT) {
-        //     chatService.sendMessage(chatRoomId, chatMessage);
-        // }
-        return true;
-    }
-
-
-    @MessageMapping("/addUser")
-    @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("+++++++++++++++++++");
-        System.out.println(chatMessage);
-        System.out.println("-------------------");
-        // Add user in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getUser());
-        return chatMessage;
-    }
-
-    // Message put test
-    @PutMapping("/inputmessage")
-    public ChatMessage inputMessage(@RequestBody ChatMessage chatMessage) {
+    public ChatMessage sendMessage(@DestinationVariable String chatRoomCd,
+            @Payload @RequestBody ChatMessage chatMessage) {
         messageService.putMessage(chatMessage);
         return chatMessage;
     }
@@ -77,15 +47,9 @@ public class ChatController {
     }
 
     @ResponseBody
-    @PostMapping("/newchatroom")
-    public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
-
-    }
-
-    @ResponseBody
     @GetMapping("/getRooms")
     public Map<String, Object> getChatRooms(HttpServletRequest req) {
-        Member member  = (Member)req.getAttribute("memberinfo");
+        Member member = (Member) req.getAttribute("memberinfo");
         System.out.println("member");
         System.out.println(member);
 
@@ -94,9 +58,22 @@ public class ChatController {
         System.out.println(roomList);
         Map<String, Object> map = new HashMap<>();
         map.put("message", "success");
-        map.put("rooms",roomList);
+        map.put("rooms", roomList);
         System.out.println(map);
         return map;
+    }
+
+    // Message put test
+    @PutMapping("/inputmessage")
+    public ChatMessage inputMessage(@RequestBody ChatMessage chatMessage) {
+        messageService.putMessage(chatMessage);
+        return chatMessage;
+    }
+
+    @ResponseBody
+    @PostMapping("/newchatroom")
+    public void makeNewChatRoom(@RequestBody ChatRoom chatRoom) {
+
     }
 
 }

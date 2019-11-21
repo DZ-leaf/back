@@ -210,4 +210,25 @@ public class MemberController {
         return Integer.toString(num);
     }
 
+
+
+    @RequestMapping(value = "/array", method = RequestMethod.POST)
+    public Map<String, Object> array(@RequestBody String obj) {
+        Map<String, Object> map = new HashMap<>();
+        System.out.println("/member/array");
+        JSONObject json = new JSONObject(obj);
+        System.out.println(json);
+        map.put("message", "success");
+        return map;
+    }
+
+    @RequestMapping(value = "/single", method = RequestMethod.POST)
+    public Map<String, Object> single(@RequestBody String obj) {
+        Map<String, Object> map = new HashMap<>();
+        System.out.println("/member/single");
+        JSONObject json = new JSONObject(obj);
+        System.out.println(json);
+        map.put("message", "success");
+        return map;
+    }
 }
